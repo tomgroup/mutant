@@ -47,24 +47,25 @@ export default function Claim() {
             Claim your MCOIN by burning rMC at a 1:1 ratio.
           </TitleSection>
           <StatusAlert>
-            {balance == '0' && account ? (
+          {
+            balance == '0' && approvalRMC === ApprovalState.APPROVED ? <p>✅️ Claim success</p> 
+              : balance == '0' && account ? (
               <p>⚠️ Sorry, you do not own any rMC</p>
-            ) : !account ? (
+              ) : !account ? (
               <ConnectWallet>
                 <Web3Status />
               </ConnectWallet>
-            ) : approvalRMC !== ApprovalState.APPROVED ? (
-              <ApproveButton onClick={approveRMCCallback}>Approve</ApproveButton>
-            ) : claimRMC === ClaimState.CLAIMED ? (
-              <p>✅️ Claim success</p>
-            ) : claimRMC === ClaimState.NOT_CLAIMED ? (
-              <>
-                <p>❌️ Your transaction did not go through, please try again or contact mods in Discord</p>
+              ) : approvalRMC !== ApprovalState.APPROVED ? (
+                <ApproveButton onClick={approveRMCCallback}>Approve</ApproveButton>
+              ) : claimRMC === ClaimState.NOT_CLAIMED ? (
+                <>
+                  {/* <p>❌️ Your transaction did not go through, please try again or contact mods in Discord</p> */}
+                  <ClaimButton onClick={claimRMCCallback}>Claim</ClaimButton>
+                </>
+              ) : (
                 <ClaimButton onClick={claimRMCCallback}>Claim</ClaimButton>
-              </>
-            ) : (
-              <ClaimButton onClick={claimRMCCallback}>Claim</ClaimButton>
-            )}
+              )
+          }
           </StatusAlert>
         </Content>
         <RightContainer>

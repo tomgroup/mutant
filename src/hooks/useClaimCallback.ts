@@ -25,7 +25,7 @@ export function useClaimCallback(amountToClaim?: CurrencyAmount, spender?: strin
     if (!currentAllowance) return ClaimState.UNKNOWN
     if (amountToClaim.currency === CETH) return ClaimState.CLAIMED
 
-    return currentAllowance.lessThan(amountToClaim) ? ClaimState.NOT_CLAIMED : ClaimState.CLAIMED
+    return currentAllowance.greaterThan(amountToClaim) ? ClaimState.NOT_CLAIMED : ClaimState.CLAIMED
   }, [account, amountToClaim])
   const claim = useCallback(async (): Promise<void> => {
     if (claimContract == null) return
